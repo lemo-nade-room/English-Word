@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from "vue-router";
 
-const router = useRouter()
-const transitionRoot = () => router.push("/")
+const router = useRouter();
+const transitionRoot = () => router.push("/");
 </script>
 
 <template>
