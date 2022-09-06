@@ -11,16 +11,26 @@ import GoButton from "@/components/buttons/GoButton.vue";
       type="password"
       placeholder="パスワード"
     />
-    <GoButton />
+    <GoButton class="btn" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .login {
+  margin-top: 164px;
+  width: 100vw;
+  height: 203px;
+
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  height: 100vh;
+
+  .input-password {
+    margin-top: 29px;
+  }
+
+  .btn {
+    margin-top: 44px;
+  }
 }
 </style>
