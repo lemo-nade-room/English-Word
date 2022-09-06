@@ -1,22 +1,34 @@
 <script lang="ts" setup>
-import { defineEmits } from "vue";
+import { defineEmits, defineProps } from "vue";
 
-const emit = defineEmits();
+const props = defineProps({
+  disable: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits<{ (event: "click", value: PointerEvent): void }>();
+const clicked = (e: PointerEvent) => {
+  if (props.disable) return;
+  emit("click", e);
+};
 </script>
 
 <template>
-  <button class="btn" @click="(e) => emit('click', e)">
+  <button :class="{ btn: true, disable }" @click="clicked">
     <span class="text">Go</span>
   </button>
 </template>
 
 <style lang="scss" scoped>
 .btn {
+  $color: #15a5e3;
   background-color: transparent;
   width: 192px;
   border: {
-    top: 1px solid #15a5e3;
-    bottom: 1px solid #15a5e3;
+    top: 1px solid $color;
+    bottom: 1px solid $color;
     right: none;
     left: none;
   }
@@ -35,7 +47,22 @@ const emit = defineEmits();
 
     color: #ffffff;
 
-    -webkit-text-stroke: 1px #15a5e3;
+    -webkit-text-stroke: 1px $color;
+  }
+
+  &.disable {
+    $color: #b2b1b1;
+    border: {
+      top: 1px solid $color;
+      bottom: 1px solid $color;
+      right: none;
+      left: none;
+    }
+
+    .text {
+      color: $color;
+      -webkit-text-stroke: 1px $color;
+    }
   }
 }
 </style>
