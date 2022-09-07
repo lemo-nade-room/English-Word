@@ -75,8 +75,11 @@ defineProps({
 });
 
 const emit = defineEmits<{
-  (event: string, value: Event): void; // eslint-disable-line no-unused-vars
   (event: "update:modelValue", value: string): void; // eslint-disable-line no-unused-vars
+  (event: "change", value: Event): void; // eslint-disable-line no-unused-vars
+  (event: "keyup", value: Event): void; // eslint-disable-line no-unused-vars
+  (event: "keydown", value: Event): void; // eslint-disable-line no-unused-vars
+  (event: "click", value: Event): void; // eslint-disable-line no-unused-vars
 }>();
 </script>
 
