@@ -4,7 +4,15 @@ defineProps({
     type: String,
     default: undefined,
   },
+  modelValue: {
+    type: String,
+    default: "",
+  },
 });
+
+const emit = defineEmits<{
+  (event: "update:modelValue", value: string): void; // eslint-disable-line no-unused-vars
+}>();
 </script>
 
 <template>
@@ -12,6 +20,8 @@ defineProps({
     class="text"
     autocapitalize="none"
     :placeholder="placeholder"
+    :value="modelValue"
+    @input="(e) => emit('update:modelValue', e.target.value)"
   ></textarea>
 </template>
 

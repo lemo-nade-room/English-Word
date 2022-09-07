@@ -1,5 +1,11 @@
+<script lang="ts" setup>
+const emit = defineEmits<{
+  (event: "click", value: PointerEvent): void; // eslint-disable-line no-unused-vars
+}>();
+</script>
+
 <template>
-  <button class="btn">決定</button>
+  <button class="btn" @click="(e) => emit('click', e)">決定</button>
 </template>
 
 <style lang="scss" scoped>
