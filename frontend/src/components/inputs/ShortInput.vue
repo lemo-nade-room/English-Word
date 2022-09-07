@@ -118,10 +118,12 @@ const emit = defineEmits<{
   border: 1px solid #34c2ff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
-  font-family: "Inter", serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
+  font: {
+    family: "Inter", serif;
+    style: normal;
+    weight: 400;
+    size: 24px;
+  }
   line-height: 46px;
   color: black;
 
