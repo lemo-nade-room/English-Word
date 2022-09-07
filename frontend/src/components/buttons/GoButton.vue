@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { defineEmits, defineProps } from "vue";
-
 const props = defineProps({
   disable: {
     type: Boolean,
@@ -8,7 +6,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{ (event: "click", value: PointerEvent): void }>();
+const emit = defineEmits<{ (event: "click", value: PointerEvent): void }>(); // eslint-disable-line no-unused-vars
 const clicked = (e: PointerEvent) => {
   if (props.disable) return;
   emit("click", e);

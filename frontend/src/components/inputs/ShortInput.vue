@@ -74,7 +74,10 @@ defineProps({
   },
 });
 
-const emit = defineEmits();
+const emit = defineEmits<{
+  (event: string, value: Event): void; // eslint-disable-line no-unused-vars
+  (event: "update:modelValue", value: string): void; // eslint-disable-line no-unused-vars
+}>();
 </script>
 
 <template>
