@@ -14,7 +14,7 @@ const clicked = (e: PointerEvent) => {
 </script>
 
 <template>
-  <button :class="{ btn: true, disable }" @click="clicked">
+  <button :class="{ btn: true, disable }" @click="clicked" type="button">
     <span class="text">Go</span>
   </button>
 </template>

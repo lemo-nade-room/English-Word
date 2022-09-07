@@ -10,7 +10,7 @@ const isImpossible = computed(() => id.value === "" || password.value === "");
 </script>
 
 <template>
-  <div class="login">
+  <form class="login">
     <ShortInput class="input-id" placeholder="ID" v-model="id" />
     <ShortInput
       class="input-password"
@@ -19,7 +19,7 @@ const isImpossible = computed(() => id.value === "" || password.value === "");
       placeholder="パスワード"
     />
     <GoButton class="btn" :disable="isImpossible" />
-  </div>
+  </form>
 </template>
 
 <style lang="scss" scoped>
