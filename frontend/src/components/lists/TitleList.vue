@@ -1,11 +1,28 @@
 <script lang="ts" setup>
 import TitleItem from "./items/TitleItem.vue";
+import { PropType } from "vue";
+import { EnglishWordTitle } from "@/contents/englishWordTitle";
+
+defineProps({
+  titles: {
+    type: Array as PropType<EnglishWordTitle[]>,
+    required: true,
+  },
+});
+
+const emit = defineEmits<{
+  (event: "click", value: string): void; // eslint-disable-line no-unused-vars
+}>();
 </script>
 
 <template>
   <div class="list">
-    <TitleItem text="Center of The Earth" />
-    <TitleItem text="Joel on Software" />
+    <TitleItem
+      @click="(id) => emit('click', id)"
+      v-for="title in titles"
+      :key="title.id"
+      :title="title"
+    />
   </div>
 </template>
 

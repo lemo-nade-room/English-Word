@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import PlusButton from "@/components/buttons/PlusButton.vue";
 import TitleList from "@/components/lists/TitleList.vue";
+
+interface EnglishWordTitle {
+  id: string;
+  title: string;
+}
+const titles: EnglishWordTitle[] = [
+  { id: crypto.randomUUID(), title: "Center of The Earth" },
+  { id: crypto.randomUUID(), title: "Joel on Software" },
+  { id: crypto.randomUUID(), title: "Clean Architecture" },
+  { id: crypto.randomUUID(), title: "Stay here with me" },
+];
 </script>
 
 <template>
   <div class="home">
     <PlusButton class="plus" />
-    <TitleList class="list" />
+    <TitleList class="list" :titles="titles" />
   </div>
 </template>
 

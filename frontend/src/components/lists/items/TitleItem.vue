@@ -1,16 +1,23 @@
 <script lang="ts" setup>
+import { EnglishWordTitle } from "@/contents/englishWordTitle";
+import type { PropType } from "vue";
+
 defineProps({
-  text: {
-    type: String,
+  title: {
+    type: Object as PropType<EnglishWordTitle>,
     required: true,
   },
 });
+
+const emit = defineEmits<{
+  (event: "click", value: string): void; // eslint-disable-line no-unused-vars
+}>();
 </script>
 
 <template>
-  <button class="item">
+  <button class="item" @click="emit('click', title.id)">
     <span class="box" />
-    <span class="text">{{ text }}</span>
+    <span class="text">{{ title.title }}</span>
   </button>
 </template>
 
@@ -42,8 +49,8 @@ defineProps({
     background: #ffffff;
     border: 1px solid #59b9ff;
     margin: {
-      top: ($height - $length) / 2;
-      bottom: ($height - $length) / 2;
+      top: calc(($height - $length) / 2);
+      bottom: calc(($height - $length) / 2);
       right: 13px;
       left: 7px;
     }
