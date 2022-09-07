@@ -24,18 +24,4 @@ const transitionRoot = () => router.push("/");
   width: 42px;
   height: 42px;
 }
-.a {
-  width: 300px;
-  height: 300px;
-  div {
-    width: 100px;
-    height: 100px;
-  }
-  .b {
-    background-color: yellow;
-  }
-  .c {
-    background-color: blue;
-  }
-}
 </style>
