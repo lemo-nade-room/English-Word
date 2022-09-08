@@ -5,6 +5,7 @@ import CreateView from "@/views/CreateView.vue";
 import ModeView from "@/views/ModeView.vue";
 import EditView from "@/views/EditView.vue";
 import StudyView from "@/views/StudyView.vue";
+import ResultView from "@/views/ResultView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: "/study",
       name: "study",
       component: StudyView,
+    },
+    {
+      path: "/result",
+      name: "result",
+      component: ResultView,
     },
   ],
 });
