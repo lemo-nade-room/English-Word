@@ -23,5 +23,6 @@ const transitionRoot = () => router.push("/");
   top: 21px;
   width: 42px;
   height: 42px;
+  z-index: 10;
 }
 </style>
