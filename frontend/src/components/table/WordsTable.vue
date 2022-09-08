@@ -22,10 +22,15 @@ const showWords = computed(() => {
 
 const emit = defineEmits<{
   (event: "changeIgnore", value: { id: string; value: boolean }): void; // eslint-disable-line no-unused-vars
+  (event: "selectRecord", value: string): void; // eslint-disable-line no-unused-vars
 }>();
 
 const onChangeIgnore = (id: string, value: boolean): void => {
   emit("changeIgnore", { id, value });
+};
+
+const onClick = (id: string): void => {
+  emit("selectRecord", id);
 };
 </script>
 
@@ -43,8 +48,8 @@ const onChangeIgnore = (id: string, value: boolean): void => {
             @update:modelValue="(e) => onChangeIgnore(word.id, e)"
           />
         </td>
-        <td class="cell jp">{{ word.jp }}</td>
-        <td class="cell en">{{ word.en }}</td>
+        <td class="cell jp" @click="onClick(word.id)">{{ word.jp }}</td>
+        <td class="cell en" @click="onClick(word.id)">{{ word.en }}</td>
       </tr>
     </transition-group>
   </div>
