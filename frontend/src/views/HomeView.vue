@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import PlusButton from "@/components/buttons/PlusButton.vue";
 import TitleList from "@/components/lists/TitleList.vue";
+import type { PropType } from "vue";
+import type { AxiosInstance } from "axios";
 
+const props = defineProps({
+  axios: {
+    type: Function as PropType<AxiosInstance>,
+    required: true,
+  },
+});
 interface EnglishWordTitle {
   id: string;
   title: string;
 }
-const titles: EnglishWordTitle[] = [
-  { id: crypto.randomUUID(), title: "Center of The Earth" },
-  { id: crypto.randomUUID(), title: "Joel on Software" },
-  { id: crypto.randomUUID(), title: "Clean Architecture" },
-  { id: crypto.randomUUID(), title: "Stay here with me" },
-];
+
+const response = await props.axios.get<EnglishWordTitle[]>("/api/book");
+const titles: EnglishWordTitle[] = response.data;
 </script>
 
 <template>
