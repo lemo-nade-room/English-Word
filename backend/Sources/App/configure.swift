@@ -35,6 +35,8 @@ public func configure(_ app: Application) throws {
     )
     let cors = CORSMiddleware(configuration: corsConfiguration)
     app.middleware.use(cors, at: .beginning)
+
+    app.migrations.add(UserSeeder())
     
     // register routes
     try routes(app)
