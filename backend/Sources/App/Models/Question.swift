@@ -17,6 +17,9 @@ final class Question: Model {
     @Parent(key: "book_id")
     var book: Book
     
+    @Field(key: "order")
+    var order: Int
+    
     @Children(for: \.$question)
     var ignores: [Ignore]
     
@@ -31,10 +34,11 @@ final class Question: Model {
     
     init() { }
     
-    init(id: UUID? = nil, jp: String, en: String, book: Book) throws {
+    init(id: UUID? = nil, jp: String, en: String, order: Int, book: Book) throws {
         self.id = id
         self.jp = jp
         self.en = en
+        self.order = order
         self.$book.id = try book.requireID()
         deletedAt = nil
     }

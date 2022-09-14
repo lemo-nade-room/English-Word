@@ -9,9 +9,11 @@ struct PersonalBook: Content {
     
     let questions: [PersonalQuestion]
     
-    static func fetch(by user: User, in bookId: UUID, on db: Database) async throws -> Self {
+    static func fetch(by user: User, in book: Book, on db: Database) async throws -> Self {
         
-        guard let book = try await Book.query(on: db)
+        guard
+            let bookId = book.id,
+            let book = try await Book.query(on: db)
             .filter(\.$id == bookId)
             .with(\.$questions, { question in
                 question.with(\.$ignores) { ignore in

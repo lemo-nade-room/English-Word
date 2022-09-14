@@ -17,10 +17,10 @@ struct NewBook: Content {
     
     private func questions(by assets: WordAssets,in book: Book, on db: Database) async throws -> [Question] {
         return try await withThrowingTaskGroup(of: Question.self) { group in
-            for en in enWords {
+            for (index, en) in enWords.enumerated() {
                 group.addTask {
                     let jp = try await searchJP(on: assets, en: en)
-                    return try .init(jp: jp, en: en, book: book)
+                    return try .init(jp: jp, en: en, order: index, book: book)
                 }
             }
             

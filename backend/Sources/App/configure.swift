@@ -19,9 +19,14 @@ public func configure(_ app: Application) throws {
 
     app.migrations.add(User.Migration())
     app.migrations.add(Book.Migration())
-    app.migrations.add(ResultRecord.Migration())
     app.migrations.add(Question.Migration())
     app.migrations.add(Ignore.Migration())
+    app.migrations.add(BookState.Migration())
+    app.migrations.add(Study.Migration())
+    app.migrations.add(StudyQuestion.Migration())
+    app.migrations.add(StudyAnswer.Migration())
+    
+    app.middleware.use(app.sessions.middleware)
     
     // register routes
     try routes(app)

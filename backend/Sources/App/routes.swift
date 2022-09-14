@@ -2,13 +2,18 @@ import Fluent
 import Vapor
 
 func routes(_ app: Application) throws {
-    app.get { req async in
-        ResultRecord().$book.$id.key.description
+    
+    app.get { req async throws in
+        return Study().$mode.field.key.description
     }
-
-    app.get("hello") { req async -> String in
-        "Hello, world!"
-    }
-
-    try app.register(collection: BookController())
+    
+    try app.register(collection: LoginController())
+    
+    let api = app
+        .grouped("api")
+        .grouped(User.Authenticator())
+        .grouped(User.guardMiddleware())
+    
+    try api.register(collection: BookController())
+    try api.register(collection: QuestionController())
 }

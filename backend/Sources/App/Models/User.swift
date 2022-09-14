@@ -18,7 +18,13 @@ final class User: Model {
     var ignores: [Ignore]
     
     @Children(for: \.$user)
-    var results: [ResultRecord]
+    var bookStates: [BookState]
+    
+    @Siblings(through: BookState.self, from: \.$user, to: \.$book)
+    var books: [Book]
+    
+    @Children(for: \.$user)
+    var studies: [Study]
     
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?

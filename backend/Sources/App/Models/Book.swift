@@ -17,9 +17,6 @@ final class Book: Model {
     @Children(for: \.$book)
     var questions: [Question]
     
-    @Children(for: \.$book)
-    var results: [ResultRecord]
-    
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
 

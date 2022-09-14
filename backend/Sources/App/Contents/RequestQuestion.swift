@@ -10,8 +10,10 @@ struct RequestQuestion: Content {
     
     let jp: String
     
+    let order: Int
+    
     func create(in book: Book, on db: Database) async throws {
-        try await Question(id: id, jp: jp, en: en, book: book).create(on: db)
+        try await Question(id: id, jp: jp, en: en, order: order, book: book).saveOrder(on: db)
     }
     
     func update(on db: Database) async throws {
@@ -20,6 +22,7 @@ struct RequestQuestion: Content {
         }
         question.en = en
         question.jp = jp
-        try await question.update(on: db)
+        question.order = order
+        try await question.saveOrder(on: db)
     }
 }
