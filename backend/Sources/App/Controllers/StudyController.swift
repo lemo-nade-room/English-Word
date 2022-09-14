@@ -4,8 +4,8 @@ import Fluent
 struct StudyController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        // TODO: StudyMiddleware
         let study = routes.grouped("study")
+            .grouped(StudyMiddleware())
         study.get(use: index)
         study.post(use: create)
         study.patch(use: answer)

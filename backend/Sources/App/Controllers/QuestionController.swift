@@ -6,6 +6,7 @@ struct QuestionController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let question = routes.grouped("question")
+            .grouped(BookSelectedMiddleware())
         question.get(use: index)
         question.post(use: create)
         question.patch(use: update)

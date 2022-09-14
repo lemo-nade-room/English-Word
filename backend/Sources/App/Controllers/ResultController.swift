@@ -5,6 +5,7 @@ struct ResultController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let result = routes.grouped("result")
+            .grouped(StudyMiddleware())
         result.get(use: index)
     }
     

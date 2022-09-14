@@ -16,4 +16,6 @@ func routes(_ app: Application) throws {
     
     try api.register(collection: BookController())
     try api.register(collection: QuestionController())
+    try api.register(collection: ResultController())
+    try api.register(collection: StudyController())
 }
