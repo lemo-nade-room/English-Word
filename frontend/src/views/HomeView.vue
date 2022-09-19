@@ -3,6 +3,7 @@ import PlusButton from "@/components/buttons/PlusButton.vue";
 import TitleList from "@/components/lists/TitleList.vue";
 import type { PropType } from "vue";
 import type { AxiosInstance } from "axios";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   axios: {
@@ -15,13 +16,15 @@ interface EnglishWordTitle {
   title: string;
 }
 
+const router = useRouter();
+
 const response = await props.axios.get<EnglishWordTitle[]>("/api/book");
 const titles: EnglishWordTitle[] = response.data;
 </script>
 
 <template>
   <div class="home">
-    <PlusButton class="plus" />
+    <PlusButton class="plus" @click="router.push('/create')" />
     <TitleList class="list" :titles="titles" />
   </div>
 </template>
