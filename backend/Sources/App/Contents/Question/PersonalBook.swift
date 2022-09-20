@@ -24,10 +24,8 @@ struct PersonalBook: Content {
             throw Abort(.badRequest)
         }
         
-        let questions = book.questions.map { question -> PersonalQuestion in
-            let ignore = question.ignores
-                .filter { $0.user.id == user.id }
-                .first?.value ?? false
+        let questions = try book.questions.map { question -> PersonalQuestion in
+            let ignore = try question.isIgnore(for: user)
             return PersonalQuestion(id: question.id!, en: question.en, jp: question.jp, ignore: ignore )
         }
         

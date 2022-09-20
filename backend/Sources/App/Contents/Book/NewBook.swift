@@ -7,13 +7,14 @@ struct NewBook: Content {
     let title: String
     let text: String
     
-    func save(on db: Database) async throws {
+    func save(on db: Database) async throws -> Book {
         let book = Book(title: title, text: text)
         try await book.save(on: db)
         
         let assets = try await WordAssets(on: db)
         let questions = try await questions(by: assets, in: book, on: db)
         try await questions.create(on: db)
+        return book
     }
     
     private func questions(by assets: WordAssets,in book: Book, on db: Database) async throws -> [Question] {

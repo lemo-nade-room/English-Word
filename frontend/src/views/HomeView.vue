@@ -20,12 +20,17 @@ const router = useRouter();
 
 const response = await props.axios.get<EnglishWordTitle[]>("/api/book");
 const titles: EnglishWordTitle[] = response.data;
+
+const onClick = async (id: string) => {
+  await props.axios.put(`/api/book/${id}`);
+  await router.push("/mode");
+};
 </script>
 
 <template>
   <div class="home">
     <PlusButton class="plus" @click="router.push('/create')" />
-    <TitleList class="list" :titles="titles" />
+    <TitleList class="list" :titles="titles" @click="onClick" />
   </div>
 </template>
 
