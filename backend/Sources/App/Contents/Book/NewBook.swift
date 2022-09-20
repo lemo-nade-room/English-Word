@@ -1,5 +1,6 @@
 import Vapor
 import Fluent
+import SwiftDeepLTranslation
 
 struct NewBook: Content {
     
@@ -10,34 +11,27 @@ struct NewBook: Content {
         let book = Book(title: title, text: text)
         try await book.save(on: db)
         
-        let assets = try await Question.assets(on: db)
+        let assets = try await WordAssets(on: db)
         let questions = try await questions(by: assets, in: book, on: db)
         try await questions.create(on: db)
     }
     
     private func questions(by assets: WordAssets,in book: Book, on db: Database) async throws -> [Question] {
-        return try await withThrowingTaskGroup(of: Question.self) { group in
-            for (index, en) in enWords.enumerated() {
-                group.addTask {
-                    let jp = try await searchJP(on: assets, en: en)
-                    return try .init(jp: jp, en: en, order: index, book: book)
-                }
-            }
-            
-            return try await group.reduce(into: [Question]()) { results, question in
-                results.append(question)
-            }
+        
+        let deepL = SwiftDeepLTranslation(key: Environment.get("DeepL_API_KEY")!)
+        let enWords = self.enWords
+        let translateds = try await enWords.translateds(deepL: deepL)
+        
+        var questions = [Question]()
+        for (index, en) in enWords.enumerated() {
+            let jp = assets.get(en: en.word) ?? translateds[index]
+            questions.append(try .init(jp: jp, en: en.word, order: index, book: book))
         }
+        return questions
     }
     
-    private func searchJP(on assets: WordAssets, en: String) async throws -> String {
-        return assets.searchJP(by: en) ?? "とりあえず not Found"
-    }
-    
-    private var enWords: [String] {
-        let separated = text.components(separatedBy: CharacterSet(charactersIn: ",. '\""))
-        let filtered = separated.filter { !["", " ", "\n"].contains($0) }
-        return Array(Set(filtered))
+    private var enWords: [BookWord] {
+        BookText(text: text).extractedWords
     }
 }
 

@@ -22,6 +22,7 @@ extension User: Authenticatable {
             bearer: BearerAuthorization,
             for request: Request
         ) async throws {
+            print("Authenticate!!!")
             clean()
             guard let value = tokens[bearer.token] else { return }
             tokens[bearer.token]!.last = Date()

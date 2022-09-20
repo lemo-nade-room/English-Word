@@ -11,6 +11,7 @@ func routes(_ app: Application) throws {
     
     let api = app
         .grouped("api")
+        .grouped(M())
         .grouped(User.Authenticator())
         .grouped(User.guardMiddleware())
     
@@ -18,4 +19,11 @@ func routes(_ app: Application) throws {
     try api.register(collection: QuestionController())
     try api.register(collection: ResultController())
     try api.register(collection: StudyController())
+}
+
+struct M: AsyncMiddleware {
+    func respond(to request: Request, chainingTo next: AsyncResponder) async throws -> Response {
+        print(request.headers)
+        return try await next.respond(to: request)
+    }
 }
