@@ -4,17 +4,47 @@ import SlidePicker from "@/components/picker/SlidePicker.vue";
 import WordsTable from "@/components/table/WordsTable.vue";
 import LinkButton from "@/components/buttons/LinkButton.vue";
 import type { WordData } from "@/contents/wordData";
+import { PropType, ref } from "vue";
+import { AxiosInstance } from "axios";
+import { fetchPersonalBook } from "@/contents/personalBook";
+import { useRouter } from "vue-router";
 
-const data: WordData[] = [
-  { id: crypto.randomUUID(), jp: "ランダム", en: "random", ignore: true },
-  { id: crypto.randomUUID(), jp: "生成する", en: "generate", ignore: false },
-  { id: crypto.randomUUID(), jp: "現象", en: "phenomenon", ignore: false },
-  { id: crypto.randomUUID(), jp: "食べる", en: "eat", ignore: true },
-];
+const props = defineProps({
+  axios: {
+    type: Function as PropType<AxiosInstance>,
+    required: true,
+  },
+});
+
+const router = useRouter();
+
+const title = ref("");
+const data = ref<WordData[]>([]);
+
+const reload = async () => {
+  const personalBook = await fetchPersonalBook(props.axios);
+  title.value = personalBook.title;
+  data.value = personalBook.questions;
+};
+
+await reload();
+
+const onEdit = async () => {
+  console.log("clicked");
+  await router.push("/edit");
+};
+
+const onChangeIgnore = async (event: { id: string; value: boolean }) => {
+  const params = new URLSearchParams();
+  params.append("questionID", event.id);
+  params.append("ignore", Boolean(event.value).toString());
+  await props.axios.patch("/api/ignore", params);
+  await reload();
+};
 </script>
 <template>
   <div class="mode">
-    <TitleHeader text="2 MINUS 1" />
+    <TitleHeader :text="title" />
 
     <LinkButton class="start" text="開始" />
 
@@ -24,9 +54,9 @@ const data: WordData[] = [
       <SlidePicker left="ランダム" right="順番" />
     </div>
 
-    <LinkButton class="edit" text="編集" />
+    <LinkButton class="edit" text="編集" @click="onEdit" />
 
-    <WordsTable class="data" :words="data" />
+    <WordsTable class="data" :words="data" @changeIgnore="onChangeIgnore" />
   </div>
 </template>
 
@@ -59,6 +89,7 @@ const data: WordData[] = [
     position: absolute;
     top: 292px;
     right: 53px;
+    z-index: 2;
   }
   .data {
     position: relative;

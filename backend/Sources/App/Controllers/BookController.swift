@@ -7,6 +7,7 @@ struct BookController: RouteCollection {
         let book = routes.grouped("book")
         book.get(use: index)
         book.post(use: create)
+        book.put(":id", use: select)
         book.patch(use: update)
         book.delete(":id", use: remove)
     }
@@ -20,8 +21,20 @@ struct BookController: RouteCollection {
     
     func create(req: Request) async throws -> HTTPStatus {
         let newBook = try req.content.decode(NewBook.self)
-        try await newBook.save(on: req.db)
+        let book = try await newBook.save(on: req.db)
+        try await req.selectBook(book)
         return .created
+    }
+
+    func select(req: Request) async throws -> HTTPStatus {
+        guard
+                let id = UUID(uuidString: req.parameters.get("id")!),
+                let book = try await Book.find(id, on: req.db)
+        else {
+            throw Abort(.badRequest)
+        }
+        try await req.selectBook(book)
+        return .ok
     }
         
     func update(req: Request) async throws -> HTTPStatus {

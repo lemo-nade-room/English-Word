@@ -4,14 +4,28 @@ import EditForm from "@/parts/EditForm.vue";
 import WordsTable from "@/components/table/WordsTable.vue";
 import LinkButton from "@/components/buttons/LinkButton.vue";
 import { WordData } from "@/contents/wordData";
-import { ref } from "vue";
+import { PropType, ref } from "vue";
+import { AxiosInstance } from "axios";
+import { fetchPersonalBook } from "@/contents/personalBook";
 
-const data: WordData[] = [
-  { id: crypto.randomUUID(), jp: "ランダム", en: "random", ignore: true },
-  { id: crypto.randomUUID(), jp: "生成する", en: "generate", ignore: false },
-  { id: crypto.randomUUID(), jp: "現象", en: "phenomenon", ignore: false },
-  { id: crypto.randomUUID(), jp: "食べる", en: "eat", ignore: true },
-];
+const props = defineProps({
+  axios: {
+    type: Function as PropType<AxiosInstance>,
+    required: true,
+  },
+});
+
+const title = ref("");
+const data = ref<WordData[]>([]);
+
+const reload = async () => {
+  const personalBook = await fetchPersonalBook(props.axios);
+  title.value = personalBook.title;
+  data.value = personalBook.questions;
+};
+
+await reload();
+
 const selected = ref<WordData>({
   id: crypto.randomUUID(),
   jp: "",
@@ -20,7 +34,7 @@ const selected = ref<WordData>({
 });
 
 const select = (selectedId: string) => {
-  const word = data.find(({ id }) => id === selectedId);
+  const word = data.value.find(({ id }) => id === selectedId);
   if (word === undefined) return;
   selected.value = word;
 };
@@ -28,15 +42,28 @@ const select = (selectedId: string) => {
 const clearSelect = () => {
   selected.value = { id: crypto.randomUUID(), jp: "", en: "", ignore: false };
 };
+
+const onChangeIgnore = async (event: { id: string; value: boolean }) => {
+  const params = new URLSearchParams();
+  params.append("questionID", event.id);
+  params.append("ignore", Boolean(event.value).toString());
+  await props.axios.patch("/api/ignore", params);
+  await reload();
+};
 </script>
 
 <template>
   <div class="edit">
-    <TitleHeader text="Don't wanna cry" />
+    <TitleHeader :text="title" />
 
     <EditForm :word="selected" />
 
-    <WordsTable @selectRecord="select" class="words" :words="data" />
+    <WordsTable
+      @selectRecord="select"
+      class="words"
+      :words="data"
+      @changeIgnore="onChangeIgnore"
+    />
 
     <span class="links">
       <LinkButton text="新規" @click="clearSelect" />
