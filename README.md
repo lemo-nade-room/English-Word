@@ -43,6 +43,12 @@ flowchart TD
 
 #### ホームページ
 
+<style>
+img {
+    width: 130px;
+}
+</style>
+
 ![ホームページ](./images/home-view.png)
 
 ホームアイコンが左上に存在し、そこを押せばいつだってホームページに戻ってこれる。
