@@ -95,7 +95,7 @@ const onRewind = async () => {
     <SwipeBackground
       @click="onTouchScreen"
       @swipeLeft="onAnswer(true)"
-      @swipeDown="onAnswer(false)"
+      @swipeUp="onAnswer(false)"
       @swipeRight="onRewind"
     />
     <TitleHeader :text="title" />
