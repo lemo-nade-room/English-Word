@@ -50,6 +50,7 @@ struct StudyController: RouteCollection {
             return .ok
         }
     
+        try await study.$questions.load(on: req.db)
         let againQuestion = study.questions
             .filter { $0.$question.id == beforeQuestion.id! }
             .max { $0.order < $1.order }

@@ -1,15 +1,11 @@
 <script lang="ts" setup>
 defineProps({
-  sum: {
-    type: Number,
-    required: true,
-  },
   count: {
-    type: Number,
+    type: String,
     required: true,
   },
   ratio: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
@@ -17,8 +13,8 @@ defineProps({
 
 <template>
   <div class="status">
-    <span class="text">{{ count }}/{{ sum }}</span>
-    <span class="text"> {{ ratio }}%</span>
+    <span class="text">{{ count }}</span>
+    <span class="text"> {{ ratio }}</span>
   </div>
 </template>
 

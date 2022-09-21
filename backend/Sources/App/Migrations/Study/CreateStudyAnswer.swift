@@ -12,7 +12,6 @@ extension StudyAnswer {
                 .field(StudyAnswer().$study.$id.key, .uuid, .required)
                 .field("created_at", .datetime)
                 .field("deleted_at", .datetime)
-                .unique(on: StudyAnswer().$question.$id.key)
                 .create()
         }
         

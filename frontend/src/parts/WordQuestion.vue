@@ -8,6 +8,10 @@ defineProps({
     type: String,
     required: true,
   },
+  isShowAnswer: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
@@ -15,7 +19,7 @@ defineProps({
   <div class="question">
     <span class="quiz text">{{ quiz }}</span>
     <span class="line" />
-    <span class="answer text">{{ answer }}</span>
+    <span class="answer text">{{ isShowAnswer ? answer : "　" }}</span>
   </div>
 </template>
 

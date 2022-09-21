@@ -61,6 +61,7 @@ const onChangeIgnore = async (event: { id: string; value: boolean }) => {
     <WordsTable
       @selectRecord="select"
       class="words"
+      height="620px"
       :words="data"
       @changeIgnore="onChangeIgnore"
     />
@@ -130,6 +131,7 @@ const onChangeIgnore = async (event: { id: string; value: boolean }) => {
     position: relative;
     top: 113px;
     width: 100%;
+    overflow: scroll;
   }
   padding: 17px;
 }
