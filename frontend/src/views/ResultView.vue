@@ -2,17 +2,23 @@
 import TitleHeader from "@/components/header/TitleHeader.vue";
 import LinkButton from "@/components/buttons/LinkButton.vue";
 import type { ResultRecord } from "@/contents/resultRecord";
+import { PropType } from "vue";
+import { AxiosInstance } from "axios";
 
-const records: ResultRecord[] = [
-  { score: "90%", mode: "1周", when: "" },
-  { score: "80%", mode: "1周", when: "1時間前" },
-  { score: "3.6周", mode: "無限", when: "2日前" },
-];
+const props = defineProps({
+  axios: {
+    type: Function as PropType<AxiosInstance>,
+    required: true,
+  },
+});
+
+const records = (await props.axios.get<ResultRecord[]>("/api/result")).data;
+const title = (await props.axios.get<string>("/api/book/state")).data;
 </script>
 
 <template>
   <div class="result">
-    <TitleHeader text="Kidult" />
+    <TitleHeader :text="title" />
     <LinkButton class="link" text="もう一度" />
     <ul class="records">
       <li class="record" v-for="record in records" :key="record">
