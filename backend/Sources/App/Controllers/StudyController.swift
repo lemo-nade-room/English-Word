@@ -5,11 +5,12 @@ struct StudyController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let study = routes.grouped("study")
-            .grouped(StudyMiddleware())
-        study.get(use: index)
         study.post(use: create)
-        study.patch(use: answer)
-        study.delete(use: rewind)
+        
+        let started = study.grouped(StudyMiddleware())
+        started.get(use: index)
+        started.patch(use: answer)
+        started.delete(use: rewind)
     }
     
     func index(req: Request) async throws -> CurrentQuestion {
