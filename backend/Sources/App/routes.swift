@@ -2,10 +2,9 @@ import Fluent
 import Vapor
 
 func routes(_ app: Application) throws {
-    
-    app.get { req async throws in
-        return Study().$mode.field.key.description
-    }
+
+    app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    app.middleware.use(SPAMiddleware(publicDirectory: app.directory.publicDirectory), at: .beginning)
     
     try app.register(collection: LoginController())
     
