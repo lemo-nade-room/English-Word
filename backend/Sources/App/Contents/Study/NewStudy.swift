@@ -12,6 +12,7 @@ struct NewStudy: Content {
         try await study.create(on: db)
         let allQuestions = try await Question.query(on: db)
             .with(\.$ignores)  { $0.with(\.$user) }
+            .with(\.$book)
             .all()
         
         let studyQuestions = try allQuestions

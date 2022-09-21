@@ -16,7 +16,7 @@ extension Study {
         let allCount = self.questions
             .filter { $0.answer != nil }
             .count
-        return String(Int(Double(correctCount) / Double(allCount) * 100.0)) + "%"
+        return String(Int(Double(correctCount) / Double(allCount == 0 ? 1 : allCount) * 100.0)) + "%"
     }
     
     /** questionsとそのbook.questionsをloadしている場合のみ使用可能 */

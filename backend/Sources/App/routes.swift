@@ -15,6 +15,7 @@ func routes(_ app: Application) throws {
         .grouped(User.guardMiddleware())
     
     try api.register(collection: BookController())
+    try api.register(collection: BookStateController())
     try api.register(collection: QuestionController())
     try api.register(collection: IgnoreController())
     try api.register(collection: ResultController())

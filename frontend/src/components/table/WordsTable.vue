@@ -9,6 +9,10 @@ const props = defineProps({
     type: Array as PropType<WordData[]>,
     required: true,
   },
+  height: {
+    type: String,
+    default: "500px",
+  },
 });
 
 const isIncludeIgnore = ref(false);
@@ -40,18 +44,20 @@ const onClick = (id: string): void => {
       <CheckBox class="checkbox" v-model="isIncludeIgnore" />
       <span class="text">ignoreを含まない</span>
     </span>
-    <transition-group name="table" class="table" tag="table">
-      <tr class="row" v-for="word in showWords" :key="word.id">
-        <td class="cell table-check">
-          <CheckBox
-            v-model="word.ignore"
-            @update:modelValue="(e) => onChangeIgnore(word.id, e)"
-          />
-        </td>
-        <td class="cell jp" @click="onClick(word.id)">{{ word.jp }}</td>
-        <td class="cell en" @click="onClick(word.id)">{{ word.en }}</td>
-      </tr>
-    </transition-group>
+    <div class="table-round" :style="{ 'max-height': height }">
+      <transition-group name="table" class="table" tag="table">
+        <tr class="row" v-for="word in showWords" :key="word.id">
+          <td class="cell table-check">
+            <CheckBox
+              v-model="word.ignore"
+              @update:modelValue="(e) => onChangeIgnore(word.id, e)"
+            />
+          </td>
+          <td class="cell jp" @click="onClick(word.id)">{{ word.jp }}</td>
+          <td class="cell en" @click="onClick(word.id)">{{ word.en }}</td>
+        </tr>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -87,10 +93,13 @@ $table-border: 1px solid #585757;
   }
 }
 
+.table-round {
+  overflow: scroll;
+}
+
 .table {
   width: 100%;
   border: $table-border;
-  overflow: scroll;
 
   .cell {
     font-size: 16px;
