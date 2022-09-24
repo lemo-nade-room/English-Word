@@ -6,6 +6,7 @@ import ModeView from "@/views/ModeView.vue";
 import EditView from "@/views/EditView.vue";
 import StudyView from "@/views/StudyView.vue";
 import ResultView from "@/views/ResultView.vue";
+import * as token from "@/connect/token";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,5 +48,4 @@ const router = createRouter({
     },
   ],
 });
-
 export default router;

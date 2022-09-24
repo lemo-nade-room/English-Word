@@ -7,7 +7,7 @@ fileprivate let TOKEN_LIMIT: TimeInterval = 20 * 60
 
 fileprivate func clean() {
     for (token, value) in tokens {
-        if Date.now.timeIntervalSince(value.last) > TOKEN_LIMIT {
+        if Date().timeIntervalSince(value.last) > TOKEN_LIMIT {
             tokens[token] = nil
         }
     }

@@ -1,6 +1,5 @@
 import Foundation
 import Collections
-import SwiftDeepLTranslation
 
 
 struct BookText {
