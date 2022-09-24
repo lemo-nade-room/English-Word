@@ -27,7 +27,7 @@ const reload = async () => {
 await reload();
 
 const selected = ref<WordData>({
-  id: crypto.randomUUID(),
+  id: "",
   jp: "",
   en: "",
   ignore: false,
@@ -40,7 +40,7 @@ const select = (selectedId: string) => {
 };
 
 const clearSelect = () => {
-  selected.value = { id: crypto.randomUUID(), jp: "", en: "", ignore: false };
+  selected.value = { id: "", jp: "", en: "", ignore: false };
 };
 
 const onChangeIgnore = async (event: { id: string; value: boolean }) => {

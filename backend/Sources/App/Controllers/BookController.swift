@@ -21,7 +21,7 @@ struct BookController: RouteCollection {
     
     func create(req: Request) async throws -> HTTPStatus {
         let newBook = try req.content.decode(NewBook.self)
-        let book = try await newBook.save(on: req.db)
+        let book = try await newBook.save(translator: req.translator,on: req.db)
         try await req.selectBook(book)
         return .created
     }

@@ -1,8 +1,8 @@
 import Foundation
-import SwiftDeepLTranslation
+import Vapor
 
 extension Array where Element == BookWord {
-    func translateds(deepL: SwiftDeepLTranslation) async throws -> [String] {
-        try await deepL.translate(texts: map { $0.word }, from: .English, to: .Japanese)
+    func translateds(translator: Translatable) async throws -> [String] {
+        try await translator.translate(source: map { $0.word })
     }
 }
