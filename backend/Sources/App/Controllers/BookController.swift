@@ -13,10 +13,7 @@ struct BookController: RouteCollection {
     }
     
     func index(req: Request) async throws -> [BookTitle] {
-        try await Book.query(on: req.db)
-            .sort(\.$updatedAt, .descending)
-            .all()
-            .map { .init(book: $0) }
+        try await req.bookTitleReader.read()
     }
     
     func create(req: Request) async throws -> HTTPStatus {
@@ -39,7 +36,7 @@ struct BookController: RouteCollection {
         
     func update(req: Request) async throws -> HTTPStatus {
         let title = try req.content.decode(BookTitle.self)
-        guard let id = title.id, let book = try await Book.find(id, on: req.db) else {
+        guard let book = try await Book.find(title.id, on: req.db) else {
             throw Abort(.badRequest)
         }
         book.title = title.title
