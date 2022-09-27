@@ -8,7 +8,7 @@ extension Ignore {
             try await database.schema(Ignore.schema)
                 .id()
                 .field(Ignore().$value.key, .bool, .required)
-                .field(Ignore().$question.$id.key, .uuid, .required, .references(Question.schema, Question().$id.key))
+                .field(Ignore().$question.$id.key, .uuid, .required, .references(Question.schema, Question().$id.key, onDelete: .cascade))
                 .field(Ignore().$user.$id.key, .uuid, .required, .references(User.schema, User().$id.key))
                 .field("created_at", .datetime)
                 .field("updated_at", .datetime)

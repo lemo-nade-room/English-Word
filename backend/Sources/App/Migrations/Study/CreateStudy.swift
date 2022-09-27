@@ -26,8 +26,8 @@ extension Study {
                 .field(Study().$mode.field.key, modeType, .required)
                 .field(Study().$direction.field.key, languageDirection, .required)
                 .field(Study().$orderMode.field.key, orderMode, .required)
-                .field(Study().$user.$id.key, .uuid, .required)
-                .field(Study().$book.$id.key, .uuid, .required)
+                .field(Study().$user.$id.key, .uuid, .required, .references(User.schema, User().$id.key, onDelete: .cascade))
+                .field(Study().$book.$id.key, .uuid, .required, .references(Book.schema, Book().$id.key, onDelete: .cascade))
                 .field("created_at", .datetime)
                 .create()
         }

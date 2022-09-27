@@ -10,7 +10,7 @@ extension Question {
                 .field(Question().$en.key, .string, .required)
                 .field(Question().$jp.key, .string, .required)
                 .field(Question().$order.key, .int, .required)
-                .field(Question().$book.$id.key, .uuid, .required, .references(Book.schema, Book().$id.key))
+                .field(Question().$book.$id.key, .uuid, .required, .references(Book.schema, Book().$id.key, onDelete: .cascade))
                 .field("created_at", .datetime)
                 .field("updated_at", .datetime)
                 .field("deleted_at", .datetime)
