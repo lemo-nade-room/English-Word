@@ -36,11 +36,7 @@ struct BookController: RouteCollection {
         
     func update(req: Request) async throws -> HTTPStatus {
         let title = try req.content.decode(BookTitle.self)
-        guard let book = try await Book.find(title.id, on: req.db) else {
-            throw Abort(.badRequest)
-        }
-        book.title = title.title
-        try await book.update(on: req.db)
+        try await req.bookTitleUpdater.update(bookTitle: title)
         return .ok
     }
     
