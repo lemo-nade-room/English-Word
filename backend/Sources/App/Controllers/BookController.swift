@@ -44,13 +44,7 @@ struct BookController: RouteCollection {
         guard let id = UUID(uuidString: req.parameters.get("id")!) else {
             throw Abort(.badRequest)
         }
-        guard let book = try await Book.find(id, on: req.db) else {
-            throw Abort(.badRequest)
-        }
-        try await Question.query(on: req.db)
-            .filter(\.$book.$id == book.id!)
-            .delete()
-        try await book.delete(on: req.db)
+        try await req.bookRemover.remove(id: id)
         return .ok
     }
 }
