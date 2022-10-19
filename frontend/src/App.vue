@@ -6,6 +6,7 @@ import * as token from "@/connect/token";
 const router = useRouter();
 
 const axios = Axios.create({
+  // baseURL: `${location.protocol}//${import.meta.env.VITE_API}`,
   baseURL: `${location.protocol}//${location.host}`,
 });
 

@@ -2,6 +2,10 @@ import Fluent
 import Vapor
 
 func routes(_ app: Application) throws {
+    
+    app.get { _ in
+        return Environment.get("DeepL_API_KEY") ?? "Not"
+    }
 
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     app.middleware.use(SPAMiddleware(publicDirectory: app.directory.publicDirectory), at: .beginning)

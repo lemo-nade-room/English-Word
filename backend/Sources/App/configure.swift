@@ -32,13 +32,13 @@ public func configure(_ app: Application) throws {
     
     app.middleware.use(app.sessions.middleware)
     
-    let corsConfiguration = CORSMiddleware.Configuration(
-        allowedOrigin: .all,
-        allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
-        allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
-    )
-    let cors = CORSMiddleware(configuration: corsConfiguration)
-    app.middleware.use(cors, at: .beginning)
+//    let corsConfiguration = CORSMiddleware.Configuration(
+//        allowedOrigin: .all,
+//        allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
+//        allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
+//    )
+//    let cors = CORSMiddleware(configuration: corsConfiguration)
+//    app.middleware.use(cors, at: .beginning)
 
     app.migrations.add(User.Seeder())
     

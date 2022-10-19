@@ -19,18 +19,15 @@ struct BookController: RouteCollection {
     func create(req: Request) async throws -> HTTPStatus {
         let newBook = try req.content.decode(NewBook.self)
         let book = try await newBook.save(translator: req.translator,on: req.db)
-        try await req.selectBook(book)
+        try await req.selectBook(book: book)
         return .created
     }
 
     func select(req: Request) async throws -> HTTPStatus {
-        guard
-                let id = UUID(uuidString: req.parameters.get("id")!),
-                let book = try await Book.find(id, on: req.db)
-        else {
+        guard let id = UUID(uuidString: req.parameters.get("id")!) else {
             throw Abort(.badRequest)
         }
-        try await req.selectBook(book)
+        try await req.selectBook(id: id)
         return .ok
     }
         
