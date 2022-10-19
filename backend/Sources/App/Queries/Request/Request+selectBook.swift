@@ -4,9 +4,16 @@ import Fluent
 
 extension Request {
     
-    func selectBook(_ book: Book) async throws {
+    func selectBook(book: Book) async throws {
         let user = try user()
         try await user.$books.attach(book, on: db)
+    }
+
+    func selectBook(id: UUID) async throws {
+        guard let book = try await Book.find(id, on: db) else {
+            throw Abort(.notFound, reason: "book having id is \(id) was not found")
+        }
+        try await selectBook(book: book)
     }
     
     func selectedBook() async throws -> Book? {
